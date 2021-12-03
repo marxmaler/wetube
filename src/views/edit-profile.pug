@@ -1,0 +1,17 @@
+extends base.pug
+block content 
+    - let { name, email, username, location } = loggedInUser
+    form(method="POST")
+        if errorMessage
+            span(style="color:red; text-align:center")=errorMessage
+            p
+            - name = bodyTemp.name
+            - email = bodyTemp.email 
+            - username = bodyTemp.username 
+            - location = bodyTemp.location
+
+        input(placeholder="Name", name="name", type="text", required, value=name)
+        input(placeholder="Email", name="email", type="email", required, value=email)
+        input(placeholder="Username", name="username", type="text", required, value=username)
+        input(placeholder="Location", name="location", type="text", required, value=location)
+        input(type="submit", value="Update Profile")
