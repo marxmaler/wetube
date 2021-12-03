@@ -5,10 +5,7 @@ block content
         if errorMessage
             span(style="color:red; text-align:center")=errorMessage
             p
-            - name = bodyTemp.name
-            - email = bodyTemp.email 
-            - username = bodyTemp.username 
-            - location = bodyTemp.location
+            - [name, email, username, location] = [bodyTemp.name, bodyTemp.email, bodyTemp.username, bodyTemp.location]
 
         input(placeholder="Name", name="name", type="text", required, value=name)
         input(placeholder="Email", name="email", type="email", required, value=email)
