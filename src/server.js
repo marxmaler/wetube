@@ -26,6 +26,8 @@ app.use(session({
 );
 
 app.use(localsMiddleware); //순서가 중요. 만약 session을 만들기 전에 localsMiddleware를 쓰겠다고 하면 localsMiddleware쪽에서 req.session을 못건드림.
+app.use("/uploads", express.static("uploads"));
+app.use("/static", express.static("assets"));
 app.use("/", rootRouter);
 app.use("/videos", videoRouter);
 app.use("/users", userRouter);
