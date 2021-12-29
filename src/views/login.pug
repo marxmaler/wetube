@@ -7,9 +7,7 @@ block content
         input(placeholder="Username", name="username", type="text", required)
         input(placeholder="Password", name="password", type="password", required)
         input(type="submit", value="Login")
-        br
-        a(href="https://github.com/login/oauth/authorize?client_id=9ea94f583fd46b5d3a1f&scope=read:user user:email&allow_signup=false") Continue with Github &rarr;
-    hr
-    div 
+        include partials/social-login.pug    
+    div.auth-switch 
         span Don't have an account? 
         a(href="/join") Create one now &rarr;
