@@ -32,7 +32,7 @@ input[type="submit"],
   background-color: white !important;
   color: rgba($color: $red, $alpha: 1) !important;
   text-align: center !important;
-  cursor: pointer;
+  cursor: pointer !important;
   display: block;
   border: none;
   &:focus {
