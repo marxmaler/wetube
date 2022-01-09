@@ -41,6 +41,7 @@ export const remove = (req, res) => res.send("Remove User");
 
 export const getLogin = (req, res) =>
   res.render("login", { pageTitle: "Login" });
+
 export const postLogin = async (req, res) => {
   const { username, password } = req.body;
   const pageTitle = "Login";
@@ -143,7 +144,6 @@ export const finishGithubLogin = async (req, res) => {
 
 export const logout = (req, res) => {
   req.session.destroy();
-  req.flash("info", "Good Bye");
   return res.redirect("/");
 };
 

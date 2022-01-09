@@ -1,5 +1,7 @@
+import { async } from "regenerator-runtime";
 import User from "../models/User";
 import Video from "../models/Video";
+import Comment from "../models/Comment";
 
 export const home = async (req, res) => {
   try {
@@ -13,7 +15,7 @@ export const home = async (req, res) => {
 };
 export const watch = async (req, res) => {
   const { id } = req.params;
-  const video = await Video.findById(id).populate("owner");
+  const video = await Video.findById(id).populate("owner").populate("comments");
   if (!video) {
     return res.status(404).render("404", { pageTitle: "Video not found." });
   }
@@ -126,5 +128,67 @@ export const registerView = async (req, res) => {
   }
   video.meta.views += 1;
   await video.save();
+  return res.sendStatus(200);
+};
+
+export const createComment = async (req, res) => {
+  const {
+    session: { user },
+    body: { text },
+    params: { id },
+  } = req;
+
+  const video = await Video.findById(id);
+  if (!video) {
+    return res.sendStatus(404);
+  }
+  const comment = await Comment.create({
+    text,
+    owner: user._id,
+    video: id,
+  });
+
+  video.comments.push(comment._id);
+  video.save();
+  const userObj = await User.findById(user._id);
+  userObj.comments.push(comment._id);
+  userObj.save();
+  return res.status(201).json({ newCommentId: comment._id });
+};
+
+export const deleteComment = async (req, res) => {
+  const { id } = req.body;
+  const userId = String(req.session.user._id);
+  const comment = await Comment.findById(id);
+  const ownerId = String(comment.owner);
+  if (userId === ownerId) {
+    await Comment.deleteOne({ _id: id });
+  } else {
+    return res.sendStatus(403);
+  }
+  const user = await User.findById(userId);
+  if (!user) {
+    return res.sendStatus(404);
+  }
+  let targetId = null;
+  for (let i = 0; i < user.comments.length; i++) {
+    if (String(user.comments[i]) === id) {
+      targetId = user.comments[i];
+    }
+  }
+  user.comments.splice(user.comments.indexOf(targetId), 1);
+  await user.save();
+  const video = await Video.findOne({ comments: id });
+  if (!video) {
+    return res.sendStatus(404);
+  }
+  targetId = null;
+  for (let i = 0; i < video.comments.length; i++) {
+    if (String(video.comments[i]) === id) {
+      targetId = video.comments[i];
+    }
+  }
+  video.comments.splice(video.comments.indexOf(targetId), 1);
+  video.save();
   return res.sendStatus(200);
 };
