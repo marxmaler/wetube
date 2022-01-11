@@ -1,4 +1,4 @@
 div.social-login
-    a(href="https://github.com/login/oauth/authorize?client_id=9ea94f583fd46b5d3a1f&scope=read:user user:email&allow_signup=false").social__btn.social__btn--github
+    a(href=`https://github.com/login/oauth/authorize?client_id=${process.env.GH_CLIENT}&scope=read:user user:email&allow_signup=false`).social__btn.social__btn--github
         i.fab.fa-github
         |  Continue with Github &rarr;
