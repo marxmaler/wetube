@@ -185,7 +185,6 @@ export const postEdit = async (req, res) => {
     }
   }
 
-  console.log(file);
   const updatedUser = await User.findByIdAndUpdate(
     _id,
     {
@@ -198,7 +197,6 @@ export const postEdit = async (req, res) => {
     { new: true }
   );
 
-  console.log(updatedUser);
   req.session.user = updatedUser;
   return res.redirect("/users/edit");
 };
