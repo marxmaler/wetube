@@ -5,6 +5,6 @@ block content
     div.video-grid
         each video in videos 
             +video(video)
-
         else 
-            span.empty__message Sorry We couldn't find any video
+            div.message-container
+                span.empty__message Sorry, we couldn't find any video.
