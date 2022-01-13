@@ -1,3 +1,11 @@
+div#videoContainer {
+  display: flex;
+  justify-content: center;
+  video {
+    max-width: 980px;
+  }
+}
+
 .video__data {
   margin-top: 20px;
   display: flex;
