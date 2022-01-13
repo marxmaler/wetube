@@ -136,7 +136,7 @@ const handleEnded = () => {
 playBtn.addEventListener("click", handlePlayClick);
 muteBtn.addEventListener("click", handleMute);
 volumeRange.addEventListener("change", handleVolumeChange);
-video.addEventListener("loadedmetadata", handleLoadedMetaData);
+// video.addEventListener("loadedmetadata", handleLoadedMetaData);
 video.addEventListener("canplay", handleLoadedMetaData);
 handleLoadedData();
 video.addEventListener("timeupdate", handleTimeUpdate);
