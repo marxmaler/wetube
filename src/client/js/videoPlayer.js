@@ -111,6 +111,15 @@ const handleMouseLeave = () => {
   hideControls();
 };
 
+const textarea = document.querySelector(".video__add-comments textarea");
+const disableKeydownListener = () => {
+  document.removeEventListener("keydown", handleKeydown);
+};
+const enableKeydownListener = () => {
+  document.addEventListener("keydown", handleKeydown);
+};
+textarea.addEventListener("focusin", disableKeydownListener);
+textarea.addEventListener("focusout", enableKeydownListener);
 const handleKeydown = (event) => {
   if (event.code === "Space") {
     handlePlayClick();
