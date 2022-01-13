@@ -64,11 +64,17 @@ function handleVolumeChange(event) {
 const formatTime = (seconds) =>
   new Date(seconds * 1000).toISOString().substring(14, 19);
 
-const handleLoadedMetaData = (event) => {
-  console.log(event);
+//비디오 길이 표시 부분
+const handleLoadedMetaData = () => {
   totalTime.innerText = formatTime(Math.floor(video.duration));
   timeline.max = Math.floor(video.duration);
 };
+const isHeroku = process.env.NODE_ENV === "production";
+if (isHeroku) {
+  video ? handleLoadedMetaData() : null;
+} else {
+  video.addEventListener("loadedmetadata", handleLoadedMetaData);
+}
 
 const handleTimeUpdate = () => {
   currentTime.innerText = formatTime(Math.floor(video.currentTime));
@@ -137,7 +143,6 @@ const handleEnded = () => {
 playBtn.addEventListener("click", handlePlayClick);
 muteBtn.addEventListener("click", handleMute);
 volumeRange.addEventListener("change", handleVolumeChange);
-video.addEventListener("loadedmetadata", handleLoadedMetaData);
 video.addEventListener("timeupdate", handleTimeUpdate);
 video.addEventListener("click", handlePlayClick);
 video.addEventListener("ended", handleEnded);
